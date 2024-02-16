@@ -51,6 +51,10 @@ func MuxTest(rw http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(rw, "Mux Test \n")
 }
 
+func Params(rw http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(rw, "params: %s \n", r.URL.Path)
+}
+
 func getValues() ([]byte, error) {
 	data := map[string]int{
 		"Temperature": rand.Intn(30),
