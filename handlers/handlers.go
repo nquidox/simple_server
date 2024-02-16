@@ -20,11 +20,14 @@ func TempHandler(rw http.ResponseWriter, r *http.Request) {
 func JsonValues(rw http.ResponseWriter, r *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 	response, err := getValues()
-	fmt.Println("JsonValues: ", string(response))
 	if err != nil {
 		panic(err)
 	}
 	fmt.Fprintf(rw, string(response))
+}
+
+func MuxTest(rw http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(rw, "Mux Test \n")
 }
 
 func getValues() ([]byte, error) {
