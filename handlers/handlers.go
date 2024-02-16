@@ -3,13 +3,19 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"math/rand"
 	"net/http"
 )
 
 func RootHandler(rw http.ResponseWriter, r *http.Request) {
-	log.Println("Hello!")
+	switch r.Method {
+	case http.MethodGet:
+		fmt.Fprintf(rw, "Hello there! \n")
+	case http.MethodPost:
+		http.Error(rw, "Unimplemented", http.StatusNotImplemented)
+	default:
+		http.Error(rw, "Method not allowed", http.StatusMethodNotAllowed)
+	}
 }
 
 func TempHandler(rw http.ResponseWriter, r *http.Request) {
