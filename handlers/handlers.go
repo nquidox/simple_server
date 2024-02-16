@@ -3,16 +3,31 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"math/rand"
 	"net/http"
 )
 
 func RootHandler(rw http.ResponseWriter, r *http.Request) {
+	v := 0
+
+	if v != 0 {
+		fmt.Println("request payload: \n")
+		fmt.Println("request method: ", r.Method)
+		fmt.Println("request headers: ")
+		for i, j := range r.Header {
+			fmt.Println(i, j)
+		}
+	}
+
 	switch r.Method {
 	case http.MethodGet:
 		fmt.Fprintf(rw, "Hello there! \n")
+
 	case http.MethodPost:
-		http.Error(rw, "Unimplemented", http.StatusNotImplemented)
+		s, _ := io.ReadAll(r.Body)
+		fmt.Fprintf(rw, "POST-ed: %s \n", s)
+
 	default:
 		http.Error(rw, "Method not allowed", http.StatusMethodNotAllowed)
 	}
