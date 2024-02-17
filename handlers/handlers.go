@@ -6,9 +6,11 @@ import (
 	"io"
 	"math/rand"
 	"net/http"
+	"time"
 )
 
 func RootHandler(rw http.ResponseWriter, r *http.Request) {
+	giveCookie(rw, r)
 	v := 0
 
 	if v != 0 {
@@ -22,7 +24,8 @@ func RootHandler(rw http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case http.MethodGet:
-		fmt.Fprintf(rw, "Hello there! \n")
+		cookie, _ := r.Cookie("Test")
+		fmt.Fprintf(rw, "Hello there! Here's a value from cookie: %s", cookie.Value)
 
 	case http.MethodPost:
 		s, _ := io.ReadAll(r.Body)
@@ -53,6 +56,18 @@ func MuxTest(rw http.ResponseWriter, r *http.Request) {
 
 func Params(rw http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(rw, "params: %s \n", r.URL.Path)
+}
+
+func giveCookie(rw http.ResponseWriter, r *http.Request) {
+	cookie := http.Cookie{
+		Name:     "Test",
+		Value:    "Some value",
+		Expires:  time.Now().Add(365 * 24 * time.Hour),
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	}
+
+	http.SetCookie(rw, &cookie)
 }
 
 func getValues() ([]byte, error) {

@@ -20,5 +20,4 @@ func main() {
 
 	fmt.Println("Simple HTTP server")
 	log.Fatal(http.ListenAndServe(":9001", mux))
-
 }
