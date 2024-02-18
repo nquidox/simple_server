@@ -24,8 +24,12 @@ func RootHandler(rw http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case http.MethodGet:
-		cookie, _ := r.Cookie("Test")
+		cookie, err := r.Cookie("Test")
 		fmt.Fprintf(rw, "Hello there! Here's a value from cookie: %s", cookie.Value)
+
+		if err != nil {
+			fmt.Fprintf(rw, "Error: no cookie to read from.")
+		}
 
 	case http.MethodPost:
 		s, _ := io.ReadAll(r.Body)
