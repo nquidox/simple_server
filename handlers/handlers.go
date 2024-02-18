@@ -11,6 +11,7 @@ import (
 
 func RootHandler(rw http.ResponseWriter, r *http.Request) {
 	giveCookie(rw, r)
+	readHTML(rw, r)
 	v := 0
 
 	if v != 0 {
@@ -60,6 +61,10 @@ func MuxTest(rw http.ResponseWriter, r *http.Request) {
 
 func Params(rw http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(rw, "params: %s \n", r.URL.Path)
+}
+
+func readHTML(rw http.ResponseWriter, r *http.Request) {
+	http.ServeFile(rw, r, "./html/index.html")
 }
 
 func giveCookie(rw http.ResponseWriter, r *http.Request) {

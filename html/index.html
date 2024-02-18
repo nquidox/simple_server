@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple server</title>
+</head>
+<body>
+<h1>Simple server</h1>
+<h3>Paths:</h3>
+<ul>
+    <li><a href="/">"/"</a> - This page. Handles GET and POST requests, other methods not allowed. Also gives you a cookie. </li>
+    <li><a href="/mux">"/mux"</a> - just a test function, nothing interesting.</li>
+    <li><a href="/temp">"/temp"</a> - returns fake temperature value in text format. </li>
+    <li><a href="/json">"/json"</a> -returns fake temperature, humidity and pressure values in JSON format.</li>
+    <li><a href="/params">"/params"</a> - returns a string of URL path except domain.</li>
+    <li><a href="/middleware">"/middleware"</a> - returns message from simple middleware function.</li>
+</ul>
+
+</body>
+</html>
