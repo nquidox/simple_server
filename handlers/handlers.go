@@ -79,3 +79,10 @@ func getValues() ([]byte, error) {
 
 	return json.Marshal(data)
 }
+
+func PrintHeaders(rw http.ResponseWriter, r *http.Request) {
+	fmt.Println("request headers: ")
+	for i, j := range r.Header {
+		fmt.Println(i, j)
+	}
+}
