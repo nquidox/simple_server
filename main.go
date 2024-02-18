@@ -4,28 +4,22 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"simple_server/handlers"
+	hnd "simple_server/handlers"
+	mw "simple_server/middleware"
 )
 
 func main() {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/mux", handlers.MuxTest)
-	mux.HandleFunc("/", handlers.RootHandler)
-	mux.HandleFunc("/temp", handlers.TempHandler)
-	mux.HandleFunc("/json", handlers.JsonValues)
-	mux.HandleFunc("/middleware", testMiddleware(handlers.PrintHeaders))
+	mux.HandleFunc("/mux", hnd.MuxTest)
+	mux.HandleFunc("/", hnd.RootHandler)
+	mux.HandleFunc("/temp", hnd.TempHandler)
+	mux.HandleFunc("/json", hnd.JsonValues)
+	mux.HandleFunc("/middleware", mw.TestMiddleware(hnd.PrintHeaders))
 
 	paramsPath := "/params/"
-	mux.Handle(paramsPath, http.StripPrefix(paramsPath, http.HandlerFunc(handlers.Params)))
+	mux.Handle(paramsPath, http.StripPrefix(paramsPath, http.HandlerFunc(hnd.Params)))
 
 	fmt.Println("Simple HTTP server")
 	log.Fatal(http.ListenAndServe(":9001", mux))
-}
-
-func testMiddleware(next http.HandlerFunc) http.HandlerFunc {
-	return func(rw http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(rw, "Message from middleware function. \n")
-		next(rw, r)
-	}
 }
